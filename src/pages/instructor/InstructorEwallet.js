@@ -44,7 +44,7 @@ const InstructorEwallet = () => {
   const fetchStudents = async () => {
     try {
       setLoading(true);
-      const url = 'http://localhost:8000/api/accounts/instructors/students/';
+      const url = `${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/api/accounts/instructors/students/`;
       const token = localStorage.getItem('access_token');
       console.log('Fetching students from:', url);
       console.log('Current access token:', token);

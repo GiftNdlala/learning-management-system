@@ -28,12 +28,12 @@ const AssignmentDetail = () => {
     try {
       setLoading(true);
       const [assignmentResponse, submissionsResponse] = await Promise.all([
-        axios.get(`http://localhost:8000/api/assignments/${id}/`, {
+        axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/api/assignments/${id}/`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
           }
         }),
-        axios.get(`http://localhost:8000/api/assignments/${id}/submissions/`, {
+        axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/api/assignments/${id}/submissions/`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
           }
@@ -58,7 +58,7 @@ const AssignmentDetail = () => {
   const handleGradeSubmission = async (submissionId, score) => {
     try {
       await axios.patch(
-        `http://localhost:8000/api/submissions/${submissionId}/`,
+        `${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/api/submissions/${submissionId}/`,
         { score },
         {
           headers: {

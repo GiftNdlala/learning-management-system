@@ -56,7 +56,7 @@ const StudentRegistration = () => {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:8000/api/accounts/register/student/', {
+              const response = await axios.post(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/api/accounts/register/student/`, {
         email: formData.email,
         password: formData.password,
         first_name: formData.first_name,

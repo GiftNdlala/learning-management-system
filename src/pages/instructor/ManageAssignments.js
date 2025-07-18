@@ -50,12 +50,12 @@ const ManageAssignments = () => {
     try {
       setLoading(true);
       const [moduleResponse, assignmentsResponse] = await Promise.all([
-        axios.get(`http://localhost:8000/api/modules/${moduleId}/`, {
+        axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/api/modules/${moduleId}/`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
           }
         }),
-        axios.get(`http://localhost:8000/api/modules/${moduleId}/assignments/`, {
+        axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/api/modules/${moduleId}/assignments/`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
           }
@@ -113,7 +113,7 @@ const ManageAssignments = () => {
       }
       formDataToSend.append('questions', JSON.stringify(formData.questions));
 
-      await axios.post('http://localhost:8000/api/assignments/', formDataToSend, {
+      await axios.post(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/api/assignments/`, formDataToSend, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
           'Content-Type': 'multipart/form-data'
@@ -137,7 +137,7 @@ const ManageAssignments = () => {
 
   const handleDeleteAssignment = async (assignmentId) => {
     try {
-      await axios.delete(`http://localhost:8000/api/assignments/${assignmentId}/`, {
+      await axios.delete(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/api/assignments/${assignmentId}/`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`
         }

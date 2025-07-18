@@ -34,7 +34,7 @@ const CreateAssignment = () => {
   useEffect(() => {
     const fetchModules = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/modules/instructor/modules/', {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/api/modules/instructor/modules/`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
           }
@@ -97,7 +97,7 @@ const CreateAssignment = () => {
         formDataToSend.append('file', formData.file);
       }
 
-      await axios.post('http://localhost:8000/api/assignments/', formDataToSend, {
+      await axios.post(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/api/assignments/`, formDataToSend, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
           'Content-Type': 'multipart/form-data'

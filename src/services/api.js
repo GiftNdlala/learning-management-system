@@ -82,7 +82,7 @@ const handleApiError = (error) => {
 // The function returns a promise that resolves to the JSON response.
 // If the request fails, it logs an error to the console.
 /*export const fetchStudents = () => {
-    return fetch("http://localhost:8000/api/modules/instructor/modules/1/students/")
+    return fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/api/modules/instructor/modules/1/students/`)
         .then(response => response.json())
         .catch(error => console.error("Error:", error));
 };*/

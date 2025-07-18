@@ -20,7 +20,7 @@ const GradeStudent = () => {
       setLoading(true);
       setError('');
       try {
-        const response = await axios.get('http://localhost:8000/api/modules/instructor/modules/', {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/api/modules/instructor/modules/`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
           }
@@ -34,7 +34,7 @@ const GradeStudent = () => {
         const stats = {};
         await Promise.all(modulesData.map(async (module) => {
           try {
-            const submissionsRes = await axios.get(`http://localhost:8000/api/modules/${module.id}/assignments/`, {
+            const submissionsRes = await axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/api/modules/${module.id}/assignments/`, {
               headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`
               }
@@ -73,7 +73,7 @@ const GradeStudent = () => {
       setSubmissions([]);
       try {
         // Fetch assignments for the module
-        const assignmentsRes = await axios.get(`http://localhost:8000/api/modules/instructor/modules/${selectedModule.id}/assignments/`, {
+        const assignmentsRes = await axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/api/modules/instructor/modules/${selectedModule.id}/assignments/`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
           }
@@ -126,7 +126,7 @@ const GradeStudent = () => {
         ? Math.round((parseFloat(percent) / 100) * (assignment.total_marks || 100))
         : null;
       await axios.patch(
-        `http://localhost:8000/api/assignments/submissions/${submissionId}/`,
+        `${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/api/assignments/submissions/${submissionId}/`,
         { grade, feedback },
         {
           headers: {
