@@ -52,13 +52,21 @@ const LoginStudent = () => {
       
       if (err.response) {
         // Handle specific API error responses
-        if (err.response.status === 401) {
+        if (err.response.status === 400) {
+          errorMessage = 'Invalid credentials. Please check your email and password.';
+        } else if (err.response.status === 401) {
           errorMessage = 'Invalid email or password';
         } else if (err.response.status === 403) {
           errorMessage = 'Access denied. Please contact support.';
+        } else if (err.response.status === 500) {
+          errorMessage = 'Server error. Please try again later.';
         } else if (err.response.data?.detail) {
           errorMessage = err.response.data.detail;
+        } else if (err.response.data?.message) {
+          errorMessage = err.response.data.message;
         }
+      } else if (err.code === 'ERR_NETWORK') {
+        errorMessage = 'Network error. Please check your internet connection and try again.';
       } else if (err.message) {
         errorMessage = err.message;
       }
