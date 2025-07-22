@@ -19,15 +19,15 @@ const StudentLayout = () => {
         </div>
         <nav>
           <ul>
-            <li><Link to="/dashboard/student">Dashboard</Link></li>
-            <li><Link to="/dashboard/student/profile">Profile</Link></li>
-            <li><Link to="/dashboard/student/modules">My Modules</Link></li>
-            <li><Link to="/dashboard/student/grades">Grades</Link></li>
-            <li><Link to="/dashboard/student/assessments">Assessments</Link></li>
-            <li><Link to="/dashboard/student/quizzes">Quizzes</Link></li>
-            <li><Link to="/dashboard/student/announcements">Announcements</Link></li>
-            <li><Link to="/dashboard/student/ewallet" className="achievement-link">🏆 Achievements</Link></li>
-            <li><Link to="/logout" className="signout-link">🚪 Sign Out</Link></li>
+            <li><Link to="/dashboard/student"><span className="nav-icon">📊</span>Dashboard</Link></li>
+            <li><Link to="/dashboard/student/profile"><span className="nav-icon">👤</span>Profile</Link></li>
+            <li><Link to="/dashboard/student/modules"><span className="nav-icon">📚</span>My Modules</Link></li>
+            <li><Link to="/dashboard/student/grades"><span className="nav-icon">📈</span>Grades</Link></li>
+            <li><Link to="/dashboard/student/assessments"><span className="nav-icon">📝</span>Assessments</Link></li>
+            <li><Link to="/dashboard/student/quizzes"><span className="nav-icon">❓</span>Quizzes</Link></li>
+            <li><Link to="/dashboard/student/announcements"><span className="nav-icon">📢</span>Announcements</Link></li>
+            <li><Link to="/dashboard/student/ewallet" className="achievement-link"><span className="nav-icon">🏆</span>Achievements</Link></li>
+            <li><Link to="/logout" className="signout-link"><span className="nav-icon">🚪</span>Sign Out</Link></li>
           </ul>
         </nav>
       </aside>
