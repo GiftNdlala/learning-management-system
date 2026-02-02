@@ -1,9 +1,23 @@
 import api from './api';
 import { quizzes } from './api';
 
+const isDemoMode = () => {
+  return localStorage.getItem('demo_mode') === 'instructor' || process.env.REACT_APP_DEMO_MODE === 'true';
+};
+
 const instructorApi = {
   // Profile
   getProfile: async () => {
+    if (isDemoMode()) {
+      return {
+        id: 1,
+        first_name: 'Demo',
+        last_name: 'Instructor',
+        email: 'instructor@afrinexel.com',
+        department: 'Mathematics',
+        subjects: ['Mathematics', 'Physical Science']
+      };
+    }
     try {
       const response = await api.get('/api/accounts/instructors/profile/');
       return response.data;
@@ -25,6 +39,15 @@ const instructorApi = {
 
   // Students
   getStudents: async () => {
+    if (isDemoMode()) {
+      return [
+        { id: 1, first_name: 'Thabo', last_name: 'Nkosi', email: 'thabo.nkosi@example.com', grade: 'Grade 11B' },
+        { id: 2, first_name: 'Nomsa', last_name: 'Zulu', email: 'nomsa.zulu@example.com', grade: 'Grade 10A' },
+        { id: 3, first_name: 'Sipho', last_name: 'Mthembu', email: 'sipho.mthembu@example.com', grade: 'Grade 12C' },
+        { id: 4, first_name: 'Lerato', last_name: 'Moyo', email: 'lerato.moyo@example.com', grade: 'Grade 9B' },
+        { id: 5, first_name: 'Kagiso', last_name: 'Mahlangu', email: 'kagiso.mahlangu@example.com', grade: 'Grade 8C' }
+      ];
+    }
     try {
       const response = await api.get('/api/accounts/instructors/students/');
       return response.data;
@@ -56,6 +79,15 @@ const instructorApi = {
 
   // Modules
   getModules: async () => {
+    if (isDemoMode()) {
+      return [
+        { id: 1, title: 'Mathematics Grade 11', subject: 'Mathematics', grade: 'Grade 11B', students_count: 25 },
+        { id: 2, title: 'English FAL Grade 10', subject: 'English First Additional Language', grade: 'Grade 10A', students_count: 22 },
+        { id: 3, title: 'History Grade 12', subject: 'History', grade: 'Grade 12C', students_count: 18 },
+        { id: 4, title: 'Geography Grade 9', subject: 'Geography', grade: 'Grade 9B', students_count: 28 },
+        { id: 5, title: 'Accounting Grade 8', subject: 'Accounting', grade: 'Grade 8C', students_count: 20 }
+      ];
+    }
     try {
       const response = await api.get('/api/modules/instructor/modules/');
       return response.data;

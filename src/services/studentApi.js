@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { quizzes } from './api';
 
-const BASE_URL = 'http://localhost:8000/api';
+const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
 
 // Create axios instance with auth header
 const api = axios.create({
@@ -11,18 +11,32 @@ const api = axios.create({
   },
 });
 
-// Add token to requests
+// Add token to requests (skip in demo mode)
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('access_token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  const demoMode = localStorage.getItem('demo_mode') === 'student' || process.env.REACT_APP_DEMO_MODE === 'true';
+  if (!demoMode) {
+    const token = localStorage.getItem('access_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
   }
   return config;
 });
 
+const isDemoMode = () => {
+  return localStorage.getItem('demo_mode') === 'student' || process.env.REACT_APP_DEMO_MODE === 'true';
+};
+
 const studentApi = {
   // Grades
   getGrades: async () => {
+    if (isDemoMode()) {
+      return [
+        { id: 1, module: 'Mathematics Grade 11', grade: '85%', status: 'Passed' },
+        { id: 2, module: 'English FAL Grade 10', grade: '92%', status: 'Passed' },
+        { id: 3, module: 'History Grade 12', grade: '78%', status: 'Passed' }
+      ];
+    }
     const response = await api.get('/modules/student/grades/');
     return response.data;
   },
@@ -34,6 +48,14 @@ const studentApi = {
 
   // Modules
   getEnrolledModules: async () => {
+    if (isDemoMode()) {
+      return [
+        { id: 1, title: 'Mathematics Grade 11', subject: 'Mathematics', instructor: 'Mr. Nkosi', progress: 75 },
+        { id: 2, title: 'English FAL Grade 10', subject: 'English First Additional Language', instructor: 'Ms. Zulu', progress: 60 },
+        { id: 3, title: 'History Grade 12', subject: 'History', instructor: 'Mr. Mthembu', progress: 80 },
+        { id: 4, title: 'Geography Grade 9', subject: 'Geography', instructor: 'Ms. Moyo', progress: 45 }
+      ];
+    }
     const response = await api.get('/modules/student/modules/');
     return response.data;
   },
@@ -102,6 +124,16 @@ const studentApi = {
 
   // Profile
   getProfile: async () => {
+    if (isDemoMode()) {
+      return {
+        id: 1,
+        first_name: 'Thabo',
+        last_name: 'Nkosi',
+        email: 'thabo.nkosi@example.com',
+        grade: 'Grade 11B',
+        subjects: ['Mathematics', 'English FAL', 'History']
+      };
+    }
     const response = await api.get('/accounts/student/profile/');
     return response.data;
   },
