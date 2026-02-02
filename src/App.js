@@ -1,6 +1,8 @@
 // src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import './App.css';
 import RoleSelect from './pages/RoleSelect';
 import LoginFunder from './pages/LoginFunder';
@@ -46,12 +48,16 @@ import QuizAttempt from './pages/student/QuizAttempt';
 
 
 function App() {
+  const theme = createTheme();
+
   return (
-    <Router>
-      <Routes>
-        {/* Public routes */}
-        <Route path="/" element={<Navigate to="/select-role" replace />} />
-        <Route path="/select-role" element={<RoleSelect />} />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <Routes>
+          {/* Public routes */}
+          <Route path="/" element={<Navigate to="/select-role" replace />} />
+          <Route path="/select-role" element={<RoleSelect />} />
         <Route path="/login/instructor" element={<LoginInstructor />} />
         <Route path="/login/student" element={<LoginStudent />} />
         <Route path="/login/funder" element={<LoginFunder />} />
@@ -121,6 +127,7 @@ function App() {
         <Route path="*" element={<Navigate to="/select-role" replace />} />
       </Routes>
     </Router>
+    </ThemeProvider>
   );
 }
 
