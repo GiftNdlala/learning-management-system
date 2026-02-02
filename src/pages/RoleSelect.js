@@ -24,9 +24,16 @@ const RoleSelect = () => {
 
   const handleDemo = () => {
     // Set demo mode in localStorage
-    localStorage.setItem('demo_mode', 'true');
+    localStorage.setItem('demo_mode', 'student');
     // Navigate to student dashboard
     navigate('/dashboard/student');
+  };
+
+  const handleInstructorDemo = () => {
+    // Set demo mode in localStorage
+    localStorage.setItem('demo_mode', 'instructor');
+    // Navigate to instructor dashboard
+    navigate('/dashboard/instructor');
   };
 
   const handleContinue = () => {
@@ -210,7 +217,29 @@ const RoleSelect = () => {
             }
           }}
         >
-          View Demo
+          View Student Demo
+        </Button>
+
+        <Button
+          variant="outlined"
+          fullWidth
+          onClick={handleInstructorDemo}
+          sx={{
+            height: '56px',
+            borderColor: '#8231D2',
+            color: '#8231D2',
+            borderRadius: '12px',
+            fontSize: '1.1rem',
+            fontWeight: 600,
+            textTransform: 'none',
+            marginTop: 1,
+            '&:hover': {
+              borderColor: '#6a1fb3',
+              backgroundColor: 'rgba(130, 49, 210, 0.1)'
+            }
+          }}
+        >
+          View Instructor Demo
         </Button>
       </Paper>
     </Box>

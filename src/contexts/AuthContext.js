@@ -9,13 +9,18 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     // Check for demo mode
-    if (process.env.REACT_APP_DEMO_MODE === 'true' || localStorage.getItem('demo_mode') === 'true') {
+    const demoMode = process.env.REACT_APP_DEMO_MODE === 'true' || localStorage.getItem('demo_mode');
+    if (demoMode) {
+      let role = 'student';
+      if (demoMode === 'instructor') {
+        role = 'instructor';
+      }
       const demoUser = {
         id: 1,
         first_name: 'Demo',
-        last_name: 'Student',
+        last_name: role === 'instructor' ? 'Instructor' : 'Student',
         email: 'demo@example.com',
-        role: 'student'
+        role: role
       };
       setUser(demoUser);
       setLoading(false);

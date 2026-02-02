@@ -349,14 +349,21 @@ export const auth = {
     return api.post('/api/auth/login/', credentials);
   },
   getCurrentUser: () => {
-    if (process.env.REACT_APP_DEMO_MODE === 'true' || localStorage.getItem('demo_mode') === 'true') {
+    const demoMode = process.env.REACT_APP_DEMO_MODE === 'true' || localStorage.getItem('demo_mode');
+    if (demoMode) {
+      let role = 'student';
+      let name = 'Student';
+      if (demoMode === 'instructor') {
+        role = 'instructor';
+        name = 'Instructor';
+      }
       return Promise.resolve({
         data: {
           id: 1,
           first_name: 'Demo',
-          last_name: 'Student',
+          last_name: name,
           email: 'demo@example.com',
-          role: 'student'
+          role: role
         }
       });
     }
