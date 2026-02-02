@@ -329,7 +329,25 @@ export const grades = {
 };
 
 export const auth = {
-  login: (credentials) => api.post('/api/auth/login/', credentials),
+  login: (credentials) => {
+    if (process.env.REACT_APP_DEMO_MODE === 'true' || localStorage.getItem('demo_mode') === 'true') {
+      // Mock login response for demo
+      return Promise.resolve({
+        data: {
+          access: 'demo_access_token',
+          refresh: 'demo_refresh_token',
+          user: {
+            id: 1,
+            first_name: 'Demo',
+            last_name: 'User',
+            email: credentials.email || 'demo@example.com'
+          },
+          role_data: { role: credentials.role || 'student' }
+        }
+      });
+    }
+    return api.post('/api/auth/login/', credentials);
+  },
   getCurrentUser: () => {
     if (process.env.REACT_APP_DEMO_MODE === 'true' || localStorage.getItem('demo_mode') === 'true') {
       return Promise.resolve({
