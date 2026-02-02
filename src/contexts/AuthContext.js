@@ -22,6 +22,9 @@ export const AuthProvider = ({ children }) => {
         email: 'demo@example.com',
         role: role
       };
+      // Set localStorage for demo
+      localStorage.setItem('access_token', 'demo_token');
+      localStorage.setItem('role_data', JSON.stringify({ role: role }));
       setUser(demoUser);
       setLoading(false);
       return;

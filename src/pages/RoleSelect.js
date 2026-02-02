@@ -25,6 +25,8 @@ const RoleSelect = () => {
   const handleDemo = () => {
     // Set demo mode in localStorage
     localStorage.setItem('demo_mode', 'student');
+    localStorage.setItem('access_token', 'demo_token');
+    localStorage.setItem('role_data', JSON.stringify({ role: 'student' }));
     // Navigate to student dashboard
     navigate('/dashboard/student');
   };
@@ -32,6 +34,8 @@ const RoleSelect = () => {
   const handleInstructorDemo = () => {
     // Set demo mode in localStorage
     localStorage.setItem('demo_mode', 'instructor');
+    localStorage.setItem('access_token', 'demo_token');
+    localStorage.setItem('role_data', JSON.stringify({ role: 'instructor' }));
     // Navigate to instructor dashboard
     navigate('/dashboard/instructor');
   };
