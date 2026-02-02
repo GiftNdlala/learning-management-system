@@ -29,6 +29,12 @@ const RoleSelect = () => {
     navigate('/dashboard/student');
   };
 
+  const handleContinue = () => {
+    if (selectedRole) {
+      navigate(`/login/${selectedRole.toLowerCase()}`);
+    }
+  };
+
   return (
     <Box
       sx={{
