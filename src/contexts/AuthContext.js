@@ -8,6 +8,20 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Check for demo mode
+    if (process.env.REACT_APP_DEMO_MODE === 'true' || localStorage.getItem('demo_mode') === 'true') {
+      const demoUser = {
+        id: 1,
+        first_name: 'Demo',
+        last_name: 'Student',
+        email: 'demo@example.com',
+        role: 'student'
+      };
+      setUser(demoUser);
+      setLoading(false);
+      return;
+    }
+
     // Check for stored user data and tokens
     const storedUser = localStorage.getItem('user');
     const accessToken = localStorage.getItem('access_token');

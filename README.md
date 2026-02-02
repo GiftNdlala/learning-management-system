@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# AFRINEXEL LEARNING MANAGEMENT SYSTEM
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is the frontend for the AFRINEXEL Learning Management System, built with React.
 
 ## Available Scripts
 

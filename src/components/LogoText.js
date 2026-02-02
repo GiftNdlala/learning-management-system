@@ -82,7 +82,7 @@ const LogoText = ({ variant = 'default' }) => {
           fontFamily: "'Arial Black', sans-serif"
         }}
       >
-        GAS
+        AFRINEXEL
       </Typography>
       {variant !== 'login' && (
         <div className="rainbow-line">
@@ -98,7 +98,7 @@ const LogoText = ({ variant = 'default' }) => {
           textTransform: 'uppercase'
         }}
       >
-        Grace Artisan School
+        LEARNING MANAGEMENT SYSTEM
       </Typography>
       {variant !== 'login' && (
         <style>

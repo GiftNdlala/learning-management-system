@@ -14,9 +14,12 @@ const api = axios.create({
 // Request interceptor for adding auth token
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('access_token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    // Skip adding token in demo mode
+    if (process.env.REACT_APP_DEMO_MODE !== 'true' && localStorage.getItem('demo_mode') !== 'true') {
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
     }
     return config;
   },
@@ -257,48 +260,6 @@ export const quizzes = {
 };
 
 // Export API objects
-export const auth = {
-  login: async (credentials) => {
-    try {
-      const response = await api.post('/api/accounts/login/', credentials);
-      const { access, refresh, user, role_data } = response.data;
-      
-      // Store tokens and user data
-      localStorage.setItem('access_token', access);
-      localStorage.setItem('refresh_token', refresh);
-      localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('role_data', JSON.stringify(role_data));
-      
-      return response.data;
-    } catch (error) {
-      console.error('Login error:', error);
-      throw error;
-    }
-  },
-
-  logout: () => {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('role_data');
-    window.location.href = '/login';
-  },
-
-  getCurrentUser: () => {
-    const userStr = localStorage.getItem('user');
-    const roleDataStr = localStorage.getItem('role_data');
-    if (!userStr || !roleDataStr) return null;
-    
-    return {
-      user: JSON.parse(userStr),
-      roleData: JSON.parse(roleDataStr)
-    };
-  },
-
-  isAuthenticated: () => {
-    return !!localStorage.getItem('access_token');
-    }
-};
 
 export const instructor = {
   addStudent: (data) => api.post('/api/accounts/instructors/add_student/', data),
@@ -319,7 +280,17 @@ export const instructor = {
 };
 
 export const courses = {
-  list: () => api.get('/api/courses/'),
+  list: () => {
+    if (process.env.REACT_APP_DEMO_MODE === 'true' || localStorage.getItem('demo_mode') === 'true') {
+      return Promise.resolve({
+        data: [
+          { id: 1, title: 'Introduction to Business', description: 'Learn the basics of business.' },
+          { id: 2, title: 'Advanced Entrepreneurship', description: 'Deep dive into entrepreneurship.' }
+        ]
+      });
+    }
+    return api.get('/api/courses/');
+  },
   getEnrolledCourses: () => api.get('/api/courses/enrolled/'),
   getCourse: (id) => api.get(`/api/courses/${id}/`),
   enroll: (courseId) => api.post(`/api/courses/${courseId}/enroll/`),
@@ -328,6 +299,17 @@ export const courses = {
   getModule: (courseId, moduleId) => api.get(`/api/courses/${courseId}/modules/${moduleId}/`),
   completeModule: (courseId, moduleId) => api.post(`/api/courses/${courseId}/modules/${moduleId}/complete/`),
   getProgress: (courseId) => api.get(`/api/courses/${courseId}/progress/`),
+  getRecentModules: () => {
+    if (process.env.REACT_APP_DEMO_MODE === 'true' || localStorage.getItem('demo_mode') === 'true') {
+      return Promise.resolve({
+        data: [
+          { id: 1, title: 'Module 1: Basics', description: 'Basic concepts.' },
+          { id: 2, title: 'Module 2: Advanced', description: 'Advanced topics.' }
+        ]
+      });
+    }
+    return api.get('/api/courses/recent-modules/');
+  },
 };
 
 export const assignments = {
@@ -344,6 +326,26 @@ export const grades = {
   getAssignmentGrade: (courseId, assignmentId) => 
     api.get(`/api/courses/${courseId}/assignments/${assignmentId}/grade/`),
   getAllGrades: () => api.get('/api/grades/'),
+};
+
+export const auth = {
+  login: (credentials) => api.post('/api/auth/login/', credentials),
+  getCurrentUser: () => {
+    if (process.env.REACT_APP_DEMO_MODE === 'true' || localStorage.getItem('demo_mode') === 'true') {
+      return Promise.resolve({
+        data: {
+          id: 1,
+          first_name: 'Demo',
+          last_name: 'Student',
+          email: 'demo@example.com',
+          role: 'student'
+        }
+      });
+    }
+    return api.get('/api/auth/user/');
+  },
+  register: (userData) => api.post('/api/auth/register/', userData),
+  logout: () => api.post('/api/auth/logout/'),
 };
 
 // Default export for backward compatibility

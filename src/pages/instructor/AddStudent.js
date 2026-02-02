@@ -175,7 +175,7 @@ const AddStudent = () => {
   return (
     <div className="add-student-page">
       <div className="add-student-form">
-        <h1>Add New GAS Student</h1>
+        <h1>Add New AFRINEXEL Student</h1>
 
         {message.text && (
           <div className={`message ${message.type}`}>
@@ -310,7 +310,7 @@ const AddStudent = () => {
       </div>
 
       <div className="students-list">
-        <h2>Registered GAS Students</h2>
+        <h2>Registered AFRINEXEL Students</h2>
         <div className="students-table">
           {students?.length === 0 ? (
             <p style={{ textAlign: "center", padding: "1rem", color: "#606266", fontSize: "1rem" }}>

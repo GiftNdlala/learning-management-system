@@ -114,7 +114,7 @@ const SignOut = () => {
             fontWeight: 500
           }}
         >
-          Thank you for using Grace Artisan School Portal
+          Thank you for using AFRINEXEL LEARNING MANAGEMENT SYSTEM Portal
         </Typography>
 
         <div className="rainbow-line" />

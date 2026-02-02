@@ -22,10 +22,11 @@ const RoleSelect = () => {
     setSelectedRole(event.target.value);
   };
 
-  const handleContinue = () => {
-    if (selectedRole) {
-      navigate(`/login/${selectedRole.toLowerCase()}`);
-    }
+  const handleDemo = () => {
+    // Set demo mode in localStorage
+    localStorage.setItem('demo_mode', 'true');
+    // Navigate to student dashboard
+    navigate('/dashboard/student');
   };
 
   return (
@@ -183,6 +184,30 @@ const RoleSelect = () => {
         >
           Continue
         </Button>
+
+        {process.env.REACT_APP_DEMO_MODE === 'true' && (
+          <Button
+            variant="outlined"
+            fullWidth
+            onClick={handleDemo}
+            sx={{
+              height: '56px',
+              borderColor: '#8231D2',
+              color: '#8231D2',
+              borderRadius: '12px',
+              fontSize: '1.1rem',
+              fontWeight: 600,
+              textTransform: 'none',
+              marginTop: 2,
+              '&:hover': {
+                borderColor: '#6a1fb3',
+                backgroundColor: 'rgba(130, 49, 210, 0.1)'
+              }
+            }}
+          >
+            View Demo
+          </Button>
+        )}
       </Paper>
     </Box>
   );
